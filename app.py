@@ -952,20 +952,34 @@ app.index_string = """
                 box-shadow: 0 0 0 5px rgba(34,211,238,.20) !important;
                 outline: none;
             }
-            .dash-slider-tooltip {
+            .slider-control .dash-slider-tooltip {
                 min-width: 40px; padding: 7px 9px !important;
-                border: 1px solid rgba(45,212,191,.45);
+                border: 1px solid #22d3ee;
                 border-radius: 7px !important;
-                background: #0d2630 !important; color: #f4fffd !important;
+                background: #ccfbf1 !important; color: #062033 !important;
+                fill: #ccfbf1 !important;
                 box-shadow: 0 6px 18px rgba(0,0,0,.38);
                 font-family: SFMono-Regular, Consolas, monospace;
                 font-size: .78rem; font-weight: 800; line-height: 1;
             }
-            .dash-range-slider-input {
-                background: #101d2d !important; color: #f4f8fc !important;
-                border: 1px solid #31445c !important; border-radius: 6px !important;
+            .slider-control .dash-range-slider-input {
+                background: #d9fbff !important; color: #062033 !important;
+                border: 1px solid #22d3ee !important; border-radius: 6px !important;
                 font-family: SFMono-Regular, Consolas, monospace;
                 font-weight: 700; text-align: center;
+            }
+            .slider-control .dash-range-slider-input:hover {
+                background: #ccfbf1 !important; border-color: #2dd4bf !important;
+            }
+            .slider-control .dash-range-slider-input:focus,
+            .slider-control .dash-range-slider-input:focus-visible {
+                background: #ecfeff !important; color: #031725 !important;
+                border-color: #67e8f9 !important;
+                box-shadow: 0 0 0 3px rgba(34,211,238,.32) !important;
+                outline: 2px solid #0e7490 !important; outline-offset: 1px;
+            }
+            .slider-control .dash-range-slider-input::selection {
+                background: #0e7490 !important; color: #ecfeff !important;
             }
             .DayPicker, .CalendarMonth, .CalendarMonthGrid,
             .DayPicker_transitionContainer { background: #0f1b2e !important; }
