@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: london-bike-demand
+    runtime: python
+    plan: free
+    buildCommand: pip install uv && uv sync
+    startCommand: uv run gunicorn app:server
+    healthCheckPath: /
+    autoDeployTrigger: commit
