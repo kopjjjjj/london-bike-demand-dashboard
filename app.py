@@ -746,6 +746,16 @@ app.index_string = """
                 --canvas: #050b13;
                 --teal: #2dd4bf;
                 --cyan: #22d3ee;
+                --Dash-Text-Strong: #f4f8fc;
+                --Dash-Text-Weak: #d5e2f2;
+                --Dash-Text-Disabled: #9aabc0;
+                --Dash-Fill-Inverse-Strong: #0f1b2e;
+                --Dash-Fill-Interactive-Strong: #2dd4bf;
+                --Dash-Fill-Interactive-Weak: #173044;
+                --Dash-Fill-Disabled: #25344a;
+                --Dash-Stroke-Strong: #3c536c;
+                --Dash-Shading-Strong: rgba(0, 0, 0, .45);
+                --Dash-Shading-Weak: rgba(0, 0, 0, .28);
                 --positive: #a3e635;
                 --amber: #fbbf24;
                 --danger: #fb7185;
@@ -914,7 +924,35 @@ app.index_string = """
             .dash-dropdown-clear, .dash-dropdown-trigger-icon,
             .dash-datepicker-range-arrow { color: #7f91aa !important; }
             .dash-dropdown-content { background: #0f1b2e !important;
-                                     border-color: #25344a !important; color: #d9e6f5 !important; }
+                                     border-color: #25344a !important; color: #f4f8fc !important; }
+            .dash-dropdown-search-container {
+                background: #16263c !important; border-color: #3c536c !important;
+            }
+            .dash-dropdown-search,
+            .dash-dropdown-search::placeholder {
+                color: #f4f8fc !important;
+            }
+            .dash-dropdown-search::placeholder { color: #9aabc0 !important; }
+            .dash-dropdown-actions { border-color: #25344a !important; }
+            .dash-dropdown-action-button {
+                color: #d5e2f2 !important;
+            }
+            .dash-dropdown-action-button:hover { color: #5eead4 !important; }
+            .dash-dropdown-option,
+            .dash-dropdown-option label,
+            .dash-dropdown-option span,
+            .dash-options-list-option-wrapper {
+                color: #f4f8fc !important;
+                background: #0f1b2e !important;
+            }
+            .dash-dropdown-option:hover,
+            .dash-dropdown-option:has(input:checked) {
+                background: #173044 !important;
+                color: #ecfffb !important;
+            }
+            .dash-dropdown {
+                accent-color: #2dd4bf !important;
+            }
             .rc-slider-rail { background-color: #26384d !important; }
             .rc-slider-track {
                 background: linear-gradient(90deg, var(--cyan), var(--teal)) !important;
