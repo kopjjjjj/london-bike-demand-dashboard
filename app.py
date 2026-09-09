@@ -37,7 +37,11 @@ MONTH_ORDER = [
 
 def load_data():
     """Load and prepare the course dataset."""
-    frame = pd.read_csv(DATA_URL)
+    local_path = BASE_DIR.parent / "data" / "london_bikes.csv"
+    try:
+        frame = pd.read_csv(local_path)
+    except (FileNotFoundError, OSError):
+        frame = pd.read_csv(DATA_URL)
     frame["date"] = pd.to_datetime(frame["date"], utc=True)
     frame = frame[frame["date"] >= pd.Timestamp("2014-01-01", tz="UTC")].copy()
     frame["weekend_label"] = frame["day_of_week"].isin(["Sat", "Sun"]).map(
@@ -79,6 +83,79 @@ def predict_hires(frame):
 
 BIKES["model_prediction"] = predict_hires(BIKES)
 BIKES["residual"] = BIKES["bikes_hired"] - BIKES["model_prediction"]
+
+
+def climatology_weather(dates):
+    """Build transparent date-specific weather estimates from London history."""
+    dates = pd.DatetimeIndex(pd.to_datetime(dates)).tz_localize(None).normalize()
+    target = pd.DataFrame({"date": dates})
+    target["month"] = target["date"].dt.month
+    target["day"] = target["date"].dt.day
+
+    historical = BIKES.assign(day=pd.to_datetime(BIKES["date"]).dt.day)
+    climatology = (
+        historical.groupby(["month", "day"], as_index=False)[MODEL_VARIABLES]
+        .median()
+    )
+    result = target.merge(climatology, on=["month", "day"], how="left")
+
+    # Month/global medians cover leap days or an unexpectedly sparse local file.
+    monthly = historical.groupby("month")[MODEL_VARIABLES].median()
+    for variable in MODEL_VARIABLES:
+        result[variable] = pd.to_numeric(result[variable], errors="coerce")
+        result[variable] = result[variable].fillna(
+            result["month"].map(monthly[variable])
+        ).fillna(historical[variable].median())
+    result["day_of_week"] = result["date"].dt.strftime("%a")
+    first_year = historical["date"].dt.year.min()
+    last_year = historical["date"].dt.year.max()
+    result.attrs.update(
+        {
+            "location": "London",
+            "source": f"London dataset climatology ({first_year}–{last_year})",
+        }
+    )
+    return result[["date", "day_of_week", *MODEL_VARIABLES, "month"]]
+
+
+def usable_weather(fetcher, fallback_dates):
+    """Fetch weather, filling gaps or replacing failures with local climatology."""
+    try:
+        frame = fetcher()
+        if frame.empty:
+            raise ValueError("weather response contained no rows")
+        frame = frame.copy()
+        frame["date"] = pd.to_datetime(frame["date"]).dt.tz_localize(None)
+        local = climatology_weather(frame["date"])
+        filled = []
+        for variable in MODEL_VARIABLES:
+            values = (
+                pd.to_numeric(frame[variable], errors="coerce")
+                if variable in frame
+                else pd.Series(float("nan"), index=frame.index)
+            )
+            missing = values.isna()
+            if missing.any():
+                replacements = pd.Series(
+                    local[variable].to_numpy(), index=frame.index
+                )
+                values = values.fillna(replacements)
+                filled.append(variable)
+            frame[variable] = values
+        if "day_of_week" not in frame:
+            frame["day_of_week"] = frame["date"].dt.strftime("%a")
+        if "month" not in frame:
+            frame["month"] = frame["date"].dt.month
+        if filled:
+            frame.attrs["note"] = (
+                "Local climatology filled missing " + ", ".join(filled) + "."
+            )
+        return frame, None
+    except Exception as error:
+        fallback = climatology_weather(fallback_dates)
+        status_code = getattr(getattr(error, "response", None), "status_code", None)
+        reason = f"HTTP {status_code}" if status_code else type(error).__name__
+        return fallback, reason
 
 
 def blank_figure(message):
@@ -1323,30 +1400,54 @@ def update_weather_predictions(_clicks, location):
         {"name": column.replace("_", " ").title(), "id": column}
         for column in ["date", "day_of_week", *MODEL_VARIABLES, "predicted_hires"]
     ]
-    try:
-        history = open_meteo_history(location or "London", "2026-01-01", "2026-01-07")
-        forecast = open_meteo(location or "London", 5)
-        history_figure, history_rows = prediction_outputs(
-            history, "Historical-weather prediction"
-        )
-        forecast_figure, forecast_rows = prediction_outputs(
-            forecast, "Live five-day forecast"
-        )
-        resolved = forecast.attrs.get("location", location)
-        status = f"Weather loaded successfully for {resolved}."
-        return (
-            status,
-            history_figure,
-            history_rows,
-            columns,
-            forecast_figure,
-            forecast_rows,
-            columns,
-        )
-    except Exception as error:
-        message = f"Weather unavailable: {error}"
-        empty = blank_figure("Weather service is temporarily unavailable")
-        return message, empty, [], columns, empty, [], columns
+    requested_location = location or "London"
+    history_dates = pd.date_range("2026-01-01", "2026-01-07")
+    forecast_dates = pd.date_range(pd.Timestamp.now().normalize(), periods=5)
+
+    history, history_error = usable_weather(
+        lambda: open_meteo_history(
+            requested_location, "2026-01-01", "2026-01-07"
+        ),
+        history_dates,
+    )
+    forecast, forecast_error = usable_weather(
+        lambda: open_meteo(requested_location, 5),
+        forecast_dates,
+    )
+    history_figure, history_rows = prediction_outputs(
+        history, "Historical-weather prediction"
+    )
+    forecast_figure, forecast_rows = prediction_outputs(
+        forecast, "Five-day demand outlook"
+    )
+
+    def source_status(name, frame, error):
+        source = frame.attrs.get("source", "weather data")
+        if "cache_age_hours" in frame.attrs:
+            source += f" ({frame.attrs['cache_age_hours']:.1f}h old)"
+        if error:
+            return (
+                f"{name}: Open-Meteo unavailable ({error}); using {source}. "
+                "These are model estimates, not observed/live weather."
+            )
+        note = f" {frame.attrs['note']}" if frame.attrs.get("note") else ""
+        return f"{name}: {source}.{note}"
+
+    status = " ".join(
+        [
+            source_status("Jan 1–7", history, history_error),
+            source_status("Next five days", forecast, forecast_error),
+        ]
+    )
+    return (
+        status,
+        history_figure,
+        history_rows,
+        columns,
+        forecast_figure,
+        forecast_rows,
+        columns,
+    )
 
 
 if __name__ == "__main__":
