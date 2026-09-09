@@ -167,13 +167,13 @@ def blank_figure(message):
         xref="paper",
         yref="paper",
         showarrow=False,
-        font={"size": 16, "color": "#7f91aa"},
+        font={"size": 16, "color": "#9aabc0"},
     )
     figure.update_layout(
         template="plotly_dark",
         height=380,
-        paper_bgcolor="#0b1424",
-        plot_bgcolor="#0b1424",
+        paper_bgcolor="#0a1422",
+        plot_bgcolor="#0a1422",
     )
     return figure
 
@@ -183,15 +183,15 @@ def style_figure(figure, height=420):
         template="plotly_dark",
         height=height,
         margin={"l": 48, "r": 24, "t": 62, "b": 44},
-        paper_bgcolor="#0b1424",
-        plot_bgcolor="#0b1424",
+        paper_bgcolor="#0a1422",
+        plot_bgcolor="#0a1422",
         font={
             "family": "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
-            "color": "#a9bad0",
+            "color": "#b7c5d6",
             "size": 12,
         },
         legend_title_text="",
-        hoverlabel={"bgcolor": "#15243a", "font_color": "#f0f7ff"},
+        hoverlabel={"bgcolor": "#10293a", "font_color": "#f4f8fc"},
         hovermode="x unified",
     )
     figure.update_xaxes(gridcolor="rgba(148,163,184,.10)", zeroline=False)
@@ -300,7 +300,7 @@ def overview_page():
                         "AVG DAILY DEMAND",
                         html.Span(id="overview-average"),
                         "hires / day",
-                        accent="violet",
+                        accent="teal",
                     ),
                     card(
                         "PEAK DAY",
@@ -612,16 +612,16 @@ def prediction_page():
                                 page_size=7,
                                 style_table={"overflowX": "auto"},
                                 style_header={
-                                    "backgroundColor": "#101b2e",
-                                    "color": "#7fffe0",
+                                    "backgroundColor": "#101d2d",
+                                    "color": "#5eead4",
                                     "fontWeight": "bold",
                                 },
                                 style_cell={
                                     "padding": "7px",
                                     "textAlign": "right",
-                                    "backgroundColor": "#0b1424",
-                                    "color": "#d9e6f5",
-                                    "borderColor": "#1d2b40",
+                                    "backgroundColor": "#0a1422",
+                                    "color": "#f4f8fc",
+                                    "borderColor": "#26384d",
                                 },
                             ),
                         ],
@@ -636,16 +636,16 @@ def prediction_page():
                                 page_size=5,
                                 style_table={"overflowX": "auto"},
                                 style_header={
-                                    "backgroundColor": "#101b2e",
-                                    "color": "#7fffe0",
+                                    "backgroundColor": "#101d2d",
+                                    "color": "#5eead4",
                                     "fontWeight": "bold",
                                 },
                                 style_cell={
                                     "padding": "7px",
                                     "textAlign": "right",
-                                    "backgroundColor": "#0b1424",
-                                    "color": "#d9e6f5",
-                                    "borderColor": "#1d2b40",
+                                    "backgroundColor": "#0a1422",
+                                    "color": "#f4f8fc",
+                                    "borderColor": "#26384d",
                                 },
                             ),
                         ],
@@ -693,9 +693,14 @@ def raw_data_page():
                 fixed_rows={"headers": True},
                 style_table={"height": "650px", "overflowY": "auto"},
                 style_header={
-                    "backgroundColor": "#101b2e",
-                    "color": "#7fffe0",
+                    "backgroundColor": "#101d2d",
+                    "color": "#5eead4",
                     "fontWeight": "bold",
+                },
+                style_filter={
+                    "backgroundColor": "#101d2d",
+                    "color": "#f4f8fc",
+                    "borderColor": "#31445c",
                 },
                 style_cell={
                     "padding": "8px",
@@ -703,14 +708,14 @@ def raw_data_page():
                     "fontSize": "0.8rem",
                     "textAlign": "right",
                     "minWidth": "95px",
-                    "backgroundColor": "#0b1424",
-                    "color": "#d9e6f5",
-                    "borderColor": "#1d2b40",
+                    "backgroundColor": "#0a1422",
+                    "color": "#f4f8fc",
+                    "borderColor": "#26384d",
                 },
                 style_data_conditional=[
                     {
                         "if": {"row_index": "odd"},
-                        "backgroundColor": "#0f1b2e",
+                        "backgroundColor": "#0d1928",
                     }
                 ],
             ),
@@ -733,42 +738,44 @@ app.index_string = """
         <style>
             * { box-sizing: border-box; }
             :root {
-                --ink: #edf5ff;
-                --muted: #7f91aa;
-                --line: rgba(148, 163, 184, .14);
-                --surface: #0b1424;
-                --surface-2: #0f1b2e;
-                --canvas: #050a14;
-                --cyan: #31c5f4;
-                --mint: #00e5b0;
-                --violet: #9b87f5;
+                --ink: #f4f8fc;
+                --muted: #9aabc0;
+                --line: rgba(148, 163, 184, .18);
+                --surface: #0a1422;
+                --surface-2: #101d2d;
+                --canvas: #050b13;
+                --teal: #2dd4bf;
+                --cyan: #22d3ee;
+                --positive: #a3e635;
+                --amber: #fbbf24;
+                --danger: #fb7185;
             }
             body { margin: 0; color: var(--ink);
                    background-color: var(--canvas);
                    background-image:
-                     linear-gradient(rgba(49,197,244,.025) 1px, transparent 1px),
-                     linear-gradient(90deg, rgba(49,197,244,.025) 1px, transparent 1px),
-                     radial-gradient(circle at 75% 0%, rgba(0,229,176,.08), transparent 34%);
+                     linear-gradient(rgba(34,211,238,.025) 1px, transparent 1px),
+                     linear-gradient(90deg, rgba(34,211,238,.025) 1px, transparent 1px),
+                     radial-gradient(circle at 75% 0%, rgba(45,212,191,.08), transparent 34%);
                    background-size: 32px 32px, 32px 32px, auto;
                    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
             .app-shell { max-width: 1600px; margin: auto; padding: 18px 28px 38px; }
             .hero { position: relative; overflow: hidden; padding: 27px 34px; color: white;
-                    border: 1px solid rgba(49,197,244,.18); border-radius: 16px;
+                    border: 1px solid rgba(34,211,238,.20); border-radius: 16px;
                     background:
-                    radial-gradient(circle at 85% -50%, rgba(0,229,176,.20), transparent 42%),
-                    linear-gradient(120deg, #08101e 0%, #0d1a2d 62%, #0b2530 100%);
+                    radial-gradient(circle at 85% -50%, rgba(45,212,191,.18), transparent 42%),
+                    linear-gradient(120deg, #07111d 0%, #0c1a29 62%, #0a2730 100%);
                     box-shadow: 0 22px 55px rgba(0, 0, 0, .32), inset 0 1px rgba(255,255,255,.03);
                     display: flex; align-items: center; justify-content: space-between; gap: 20px; }
             .hero:after { content: ""; position: absolute; right: 5%; top: 18px;
                           width: 170px; height: 70px; opacity: .25;
                           background: repeating-linear-gradient(90deg, transparent 0 9px,
-                          #00e5b0 10px 11px); transform: skewX(-18deg); }
+                          var(--teal) 10px 11px); transform: skewX(-18deg); }
             .hero h1 { margin: 0 0 7px; font-size: 1.85rem; letter-spacing: -.035em; }
-            .hero p { margin: 0; color: #8fa2ba; font-size: .92rem; }
-            .hero .eyebrow { color: var(--mint); margin-bottom: 6px; }
+            .hero p { margin: 0; color: #a9b8ca; font-size: .92rem; }
+            .hero .eyebrow { color: var(--teal); margin-bottom: 6px; }
             .hero-badge { position: relative; z-index: 1; padding: 9px 13px;
-                          border: 1px solid rgba(0,229,176,.25); border-radius: 999px;
-                          background: rgba(0,229,176,.07); color: #b8ffec; backdrop-filter: blur(8px);
+                          border: 1px solid rgba(45,212,191,.28); border-radius: 999px;
+                          background: rgba(45,212,191,.08); color: #c8fff6; backdrop-filter: blur(8px);
                           font-size: .68rem; font-weight: 800; letter-spacing: .1em; white-space: nowrap; }
             .system-rail { display: flex; align-items: center; gap: 0; margin-top: 10px;
                            min-height: 35px; border: 1px solid var(--line); border-radius: 9px;
@@ -776,14 +783,14 @@ app.index_string = """
                            font-family: SFMono-Regular, Consolas, monospace; }
             .rail-item { padding: 9px 16px; border-right: 1px solid var(--line);
                          color: #b5c5d8; font-size: .66rem; letter-spacing: .045em; }
-            .rail-label { margin-right: 8px; color: #53647c; }
-            .rail-live { margin-left: auto; color: var(--mint); border-right: 0; }
+            .rail-label { margin-right: 8px; color: #708198; }
+            .rail-live { margin-left: auto; color: var(--teal); border-right: 0; }
             .rail-live .live-dot { width: 6px; height: 6px; }
             .page { padding: 28px 0 0; }
             .section-header { margin-bottom: 20px; }
             .section-header h2 { margin: 4px 0 5px; font-size: 1.55rem; letter-spacing: -.03em; }
             .eyebrow, .chart-kicker, .subsection-label, .insight-label, .filter-caption {
-                color: var(--mint); font-size: .68rem; font-weight: 800; letter-spacing: .14em;
+                color: var(--teal); font-size: .68rem; font-weight: 800; letter-spacing: .14em;
             }
             .section-description { margin: 0; color: var(--muted); font-size: .9rem; }
             .subsection-label { margin: 24px 0 12px; }
@@ -798,8 +805,8 @@ app.index_string = """
             .filter-status { min-width: 250px; padding: 4px 10px 8px; }
             .data-status { margin-top: 7px; color: #b9c9db; font-size: .82rem; font-weight: 650; }
             .live-dot { display: inline-block; width: 8px; height: 8px; margin-right: 6px;
-                        border-radius: 50%; background: var(--mint);
-                        box-shadow: 0 0 0 4px rgba(0,229,176,.10), 0 0 13px rgba(0,229,176,.7); }
+                        border-radius: 50%; background: var(--positive);
+                        box-shadow: 0 0 0 4px rgba(163,230,53,.10), 0 0 13px rgba(163,230,53,.45); }
             .two-column { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
                           gap: 16px; margin-bottom: 16px; }
             .three-column { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -815,18 +822,18 @@ app.index_string = """
             .metric-card { position: relative; overflow: hidden; padding: 17px 18px 15px; }
             .metric-card:after { content: ""; position: absolute; left: 0; bottom: 0;
                                  width: 100%; height: 2px;
-                                 background: linear-gradient(90deg, var(--mint), var(--cyan), transparent); }
+                                 background: linear-gradient(90deg, var(--teal), var(--cyan), transparent); }
             .metric-heading, .metric-footer { display: flex; align-items: center;
                                               justify-content: space-between; gap: 8px; }
-            .metric-label { color: #71839c; font-size: .68rem; font-weight: 800; letter-spacing: .09em; }
+            .metric-label { color: #8fa1b8; font-size: .68rem; font-weight: 800; letter-spacing: .09em; }
             .metric-dot { font-size: .62rem; }
-            .metric-dot.cyan { color: #31c5f4; } .metric-dot.violet { color: #9b87f5; }
-            .metric-dot.amber { color: #f59e0b; } .metric-dot.rose { color: #f43f5e; }
+            .metric-dot.cyan { color: var(--cyan); } .metric-dot.teal { color: var(--teal); }
+            .metric-dot.amber { color: var(--amber); } .metric-dot.rose { color: var(--danger); }
             .metric-value { margin: 9px 0 8px; font-size: 1.75rem; line-height: 1;
                             color: #f2f8ff; font-family: SFMono-Regular, Consolas, monospace;
                             font-weight: 760; letter-spacing: -.055em; }
-            .metric-note { color: #71839c; font-size: .72rem; }
-            .trend-pill { padding: 3px 7px; color: var(--mint); background: rgba(0,229,176,.08);
+            .metric-note { color: #8fa1b8; font-size: .72rem; }
+            .trend-pill { padding: 3px 7px; color: var(--positive); background: rgba(163,230,53,.08);
                           border-radius: 999px; font-size: .68rem; font-weight: 750; }
             .chart-heading { padding: 8px 12px 0; }
             .chart-subtitle { margin-top: 3px; color: #71839c; font-size: .78rem; }
@@ -834,7 +841,7 @@ app.index_string = """
                             background: linear-gradient(145deg, #0c1728, #10243a);
                             border-color: rgba(49,197,244,.16); display: flex; flex-direction: column;
                             justify-content: center; }
-            .insight-label { color: var(--mint); }
+            .insight-label { color: var(--teal); }
             .insight-copy { margin: 18px 0 24px; font-size: 1.25rem; line-height: 1.55;
                             font-weight: 650; letter-spacing: -.02em; }
             .insight-meta { color: #71839c; font-size: .72rem; }
@@ -854,10 +861,12 @@ app.index_string = """
             .decision-value.small { font-size: 1rem; }
             .decision-note { color: #71839c; font-size: .7rem; }
             .primary-button { border: 0; border-radius: 9px; padding: 11px 18px;
-                              background: linear-gradient(120deg, #00c99a, #0891b2);
+                              background: linear-gradient(120deg, var(--teal), var(--cyan));
                               color: #03120f; font-weight: 800; cursor: pointer;
-                              box-shadow: 0 7px 18px rgba(0,229,176,.15); }
-            .primary-button:hover { transform: translateY(-1px); }
+                              box-shadow: 0 7px 18px rgba(45,212,191,.16); }
+            .primary-button:hover { transform: translateY(-1px); filter: brightness(1.08); }
+            .primary-button:focus-visible { outline: 3px solid rgba(34,211,238,.42);
+                                            outline-offset: 2px; }
             .status { color: #8fa2ba; padding: 10px; font-size: .8rem; }
             .muted { color: var(--muted); font-size: .82rem; }
             .tab-container { margin-top: 14px; border: 1px solid var(--line);
@@ -867,21 +876,33 @@ app.index_string = """
                                   background: transparent !important; padding: 15px 18px !important;
                                   color: #71839c; font-size: .72rem; font-weight: 800;
                                   letter-spacing: .07em; }
-            .tab-container .tab--selected { color: var(--mint) !important;
-                                            border-bottom-color: var(--mint) !important;
-                                            background: rgba(0,229,176,.045) !important; }
+            .tab-container .tab--selected { color: var(--teal) !important;
+                                            border-bottom-color: var(--teal) !important;
+                                            background: rgba(45,212,191,.055) !important; }
             .Select-control, .Select-menu-outer, .DateRangePickerInput,
-            .SingleDatePickerInput, input[type="text"] {
+            .SingleDatePickerInput, input[type="text"], input[type="number"] {
                 background: #0f1b2e !important; border-color: #25344a !important;
-                color: #d9e6f5 !important;
+                color: #f4f8fc !important;
             }
+            input::placeholder { color: #91a2b8 !important; opacity: 1; }
             .Select-value-label, .Select-placeholder, .DateInput_input,
             .DateInput_input__focused, .DateInput, .DateRangePickerInput_arrow,
-            .SingleDatePickerInput_calendarIcon_svg { color: #d9e6f5 !important;
+            .SingleDatePickerInput_calendarIcon_svg { color: #f4f8fc !important;
                 background: #0f1b2e !important; }
+            .Select-control:hover, .DateRangePickerInput:hover, .SingleDatePickerInput:hover,
+            input[type="text"]:hover, input[type="number"]:hover {
+                border-color: #3c536c !important;
+            }
+            .Select-control:focus-within, .DateRangePickerInput:focus-within,
+            .SingleDatePickerInput:focus-within, input[type="text"]:focus,
+            input[type="number"]:focus {
+                border-color: var(--cyan) !important;
+                box-shadow: 0 0 0 3px rgba(34,211,238,.14) !important;
+                outline: none;
+            }
             .Select-menu-outer { z-index: 1000 !important; }
             .VirtualizedSelectOption { background: #0f1b2e; color: #d9e6f5; }
-            .VirtualizedSelectFocusedOption { background: #16263c; color: var(--mint); }
+            .VirtualizedSelectFocusedOption { background: #173044; color: #d6fffa; }
             .dash-dropdown, .dash-dropdown-trigger,
             .dash-datepicker-input-wrapper, .dash-datepicker-input {
                 background: #0f1b2e !important; border-color: #25344a !important;
@@ -894,12 +915,77 @@ app.index_string = """
             .dash-datepicker-range-arrow { color: #7f91aa !important; }
             .dash-dropdown-content { background: #0f1b2e !important;
                                      border-color: #25344a !important; color: #d9e6f5 !important; }
-            .rc-slider-rail { background-color: #243249; }
-            .rc-slider-track { background: linear-gradient(90deg, #31c5f4, #00e5b0); }
-            .rc-slider-handle { border-color: var(--mint); background: #07101d; }
-            .rc-slider-tooltip-inner { background: #00e5b0; color: #04120f;
-                                       font-family: SFMono-Regular, Consolas, monospace; }
+            .rc-slider-rail { background-color: #26384d !important; }
+            .rc-slider-track {
+                background: linear-gradient(90deg, var(--cyan), var(--teal)) !important;
+            }
+            .rc-slider-handle {
+                width: 18px; height: 18px; margin-top: -7px;
+                border: 3px solid var(--teal) !important; background: #07131f !important;
+                box-shadow: 0 0 0 3px rgba(45,212,191,.16) !important;
+                opacity: 1 !important;
+            }
+            .rc-slider-handle:hover, .rc-slider-handle:focus {
+                border-color: #67e8f9 !important;
+                box-shadow: 0 0 0 5px rgba(34,211,238,.20) !important;
+            }
+            .rc-slider-tooltip-inner {
+                min-width: 46px; padding: 7px 9px;
+                border: 1px solid rgba(45,212,191,.45);
+                border-radius: 7px; background: #0d2630 !important; color: #f4fffd !important;
+                box-shadow: 0 6px 18px rgba(0,0,0,.38);
+                font-family: SFMono-Regular, Consolas, monospace; font-weight: 800;
+                font-size: .78rem; line-height: 1;
+            }
+            .rc-slider-tooltip-arrow { border-bottom-color: #0d2630 !important; }
+            .dash-slider-track { background: #26384d !important; }
+            .dash-slider-range {
+                background: linear-gradient(90deg, var(--cyan), var(--teal)) !important;
+            }
+            .dash-slider-thumb {
+                background: #07131f !important;
+                border: 3px solid var(--teal) !important;
+                box-shadow: 0 0 0 3px rgba(45,212,191,.16) !important;
+            }
+            .dash-slider-thumb:hover, .dash-slider-thumb:focus-visible {
+                border-color: #67e8f9 !important;
+                box-shadow: 0 0 0 5px rgba(34,211,238,.20) !important;
+                outline: none;
+            }
+            .dash-slider-tooltip {
+                min-width: 40px; padding: 7px 9px !important;
+                border: 1px solid rgba(45,212,191,.45);
+                border-radius: 7px !important;
+                background: #0d2630 !important; color: #f4fffd !important;
+                box-shadow: 0 6px 18px rgba(0,0,0,.38);
+                font-family: SFMono-Regular, Consolas, monospace;
+                font-size: .78rem; font-weight: 800; line-height: 1;
+            }
+            .dash-range-slider-input {
+                background: #101d2d !important; color: #f4f8fc !important;
+                border: 1px solid #31445c !important; border-radius: 6px !important;
+                font-family: SFMono-Regular, Consolas, monospace;
+                font-weight: 700; text-align: center;
+            }
+            .DayPicker, .CalendarMonth, .CalendarMonthGrid,
+            .DayPicker_transitionContainer { background: #0f1b2e !important; }
+            .CalendarMonth_caption, .DayPicker_weekHeader, .CalendarDay {
+                color: #d9e6f5 !important;
+            }
+            .CalendarDay { background: #0f1b2e !important; border-color: #26384d !important; }
+            .CalendarDay:hover { background: #173044 !important; color: #f4fffd !important; }
+            .CalendarDay__selected, .CalendarDay__selected:hover {
+                background: #0f766e !important; border-color: var(--teal) !important;
+                color: #ffffff !important;
+            }
+            .CalendarDay__selected_span { background: #134e4a !important;
+                                          border-color: #26736d !important; }
+            .DayPickerNavigation_button { background: #15263a !important;
+                                          border-color: #31445c !important; }
             .dash-table-container { border-radius: 10px; overflow: hidden; }
+            .dash-table-container input { background: #101d2d !important;
+                                          color: #f4f8fc !important;
+                                          border-color: #31445c !important; }
             @media (max-width: 1050px) {
                 .two-column, .three-column, .scenario-grid, .overview-grid {
                     grid-template-columns: 1fr;
@@ -1047,7 +1133,7 @@ def update_overview(start_date, end_date, seasons):
             y=monthly["rolling"],
             name="3-month signal",
             mode="lines",
-            line={"color": "#00e5b0", "width": 3},
+            line={"color": "#2dd4bf", "width": 3},
             hovertemplate="%{x|%b %Y}<br>%{y:,.0f} rolling hires<extra></extra>",
         )
     )
@@ -1066,8 +1152,8 @@ def update_overview(start_date, end_date, seasons):
             y=MONTH_ORDER,
             colorscale=[
                 [0, "#111d30"],
-                [0.45, "#087f8c"],
-                [1, "#00e5b0"],
+                [0.45, "#0e7490"],
+                [1, "#2dd4bf"],
             ],
             colorbar={"title": "Avg hires", "thickness": 10},
             hovertemplate="%{y} · %{x}<br>%{z:,.0f} avg hires<extra></extra>",
@@ -1088,7 +1174,7 @@ def update_overview(start_date, end_date, seasons):
         x="season_name",
         y="bikes_hired",
         color="bikes_hired",
-        color_continuous_scale=["#182840", "#31c5f4", "#00e5b0"],
+        color_continuous_scale=["#17263a", "#22d3ee", "#2dd4bf"],
         title="Seasonal demand profile",
         labels={"season_name": "", "bikes_hired": "Average daily hires"},
     )
@@ -1096,7 +1182,7 @@ def update_overview(start_date, end_date, seasons):
     season_chart.add_hline(
         y=average,
         line_dash="dot",
-        line_color="#7f91aa",
+        line_color="#9aabc0",
         annotation_text="Period average",
     )
 
@@ -1116,7 +1202,7 @@ def update_overview(start_date, end_date, seasons):
         y="Driver",
         orientation="h",
         color="Demand swing",
-        color_continuous_scale=["#ff5c8a", "#28364a", "#00e5b0"],
+        color_continuous_scale=["#fb7185", "#2a384a", "#a3e635"],
         color_continuous_midpoint=0,
         title="Modelled weather leverage",
         labels={"Demand swing": "P10 → P90 impact"},
@@ -1166,6 +1252,7 @@ def update_exploration(variable, colour):
         color=colour,
         opacity=0.55,
         trendline="lowess",
+        color_discrete_sequence=["#2dd4bf", "#22d3ee", "#fbbf24", "#fb7185"],
         labels={
             variable: VARIABLE_LABELS.get(variable, variable),
             "bikes_hired": "Daily bike hires",
@@ -1183,7 +1270,7 @@ def update_exploration(variable, colour):
         x="day_of_week",
         y="bikes_hired",
         color="bikes_hired",
-        color_continuous_scale=["#182840", "#31c5f4", "#00e5b0"],
+        color_continuous_scale=["#17263a", "#22d3ee", "#2dd4bf"],
         labels={"day_of_week": "", "bikes_hired": "Average daily hires"},
         title="Average demand by day of week",
     )
@@ -1230,7 +1317,7 @@ def update_model_series(start_date, end_date, frequency):
         y="Daily hires",
         color="Series",
         title="Actual demand vs Model L1 prediction",
-        color_discrete_map={"Actual": "#31c5f4", "Model L1": "#a3e635"},
+        color_discrete_map={"Actual": "#22d3ee", "Model L1": "#2dd4bf"},
     )
 
     residual_line = px.scatter(
@@ -1241,14 +1328,14 @@ def update_model_series(start_date, end_date, frequency):
         title="Residuals through time",
         labels={"residual": "Actual − predicted", "date": ""},
     )
-    residual_line.add_hline(y=0, line_dash="dash", line_color="#ff5c8a")
+    residual_line.add_hline(y=0, line_dash="dash", line_color="#fb7185")
     histogram = px.histogram(
         selected,
         x="residual",
         nbins=45,
         title="Residual distribution",
         labels={"residual": "Actual − predicted"},
-        color_discrete_sequence=["#31c5f4"],
+        color_discrete_sequence=["#22d3ee"],
     )
     return (
         style_figure(line, 470),
@@ -1297,11 +1384,11 @@ def update_scenario(temp, precip, windspeed, visibility, uvindex, date):
             title={"text": "Predicted daily hires"},
             gauge={
                 "axis": {"range": [0, 80000]},
-                "bar": {"color": "#00e5b0"},
+                "bar": {"color": "#2dd4bf"},
                 "steps": [
-                    {"range": [0, 18000], "color": "#2a1524"},
-                    {"range": [18000, 40000], "color": "#2b2918"},
-                    {"range": [40000, 80000], "color": "#10352f"},
+                    {"range": [0, 18000], "color": "#3b1d28"},
+                    {"range": [18000, 40000], "color": "#3a3018"},
+                    {"range": [40000, 80000], "color": "#1d351e"},
                 ],
             },
         )
@@ -1315,7 +1402,7 @@ def update_scenario(temp, precip, windspeed, visibility, uvindex, date):
         y="Factor",
         orientation="h",
         color="Contribution",
-        color_continuous_scale=["#ff5c8a", "#28364a", "#00e5b0"],
+        color_continuous_scale=["#fb7185", "#2a384a", "#a3e635"],
         color_continuous_midpoint=0,
         title="Contribution to prediction",
     )
@@ -1370,7 +1457,7 @@ def prediction_outputs(frame, title):
         x="date",
         y="predicted_hires",
         color="predicted_hires",
-        color_continuous_scale=["#182840", "#31c5f4", "#00e5b0"],
+        color_continuous_scale=["#17263a", "#22d3ee", "#2dd4bf"],
         title=title,
         labels={"date": "", "predicted_hires": "Predicted hires"},
     )
